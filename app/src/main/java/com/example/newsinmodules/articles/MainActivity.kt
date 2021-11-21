@@ -8,17 +8,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsinmodules.NewsApp
 import com.example.newsinmodules.databinding.MainActivityBinding
 import com.example.newsinmodules.details.ArticleDetailsActivity
+import dagger.Lazy
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: MainActivityBinding
     private val viewModel: ArticlesVM by viewModels {
-        factory
+        factory.get()
     }
 
     @Inject
-    lateinit var factory: ArticlesVM.Factory
+    lateinit var factory: Lazy<ArticlesVM.Factory>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -27,7 +27,9 @@ class MainActivity : AppCompatActivity() {
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        (application as NewsApp).appComponent.inject(this)
+        val articlesComponent = DaggerArticlesComponent.factory()
+            .create(deps = (application as NewsApp).appComponent)
+        articlesComponent.inject(this)
 
         viewModel.articles.observe(this, { articles ->
             val articlesAdapter = ArticlesAdapter(

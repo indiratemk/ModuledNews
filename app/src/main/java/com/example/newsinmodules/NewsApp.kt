@@ -13,6 +13,7 @@ class NewsApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        _appComponent = DaggerAppComponent.create()
+        _appComponent = DaggerAppComponent.factory()
+            .create(application = this)
     }
 }

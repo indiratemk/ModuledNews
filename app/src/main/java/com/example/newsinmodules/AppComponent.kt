@@ -1,13 +1,22 @@
 package com.example.newsinmodules
 
-import com.example.newsinmodules.articles.MainActivity
+import android.app.Application
+import com.example.newsinmodules.articles.ArticlesDeps
 import com.example.newsinmodules.network.NetworkModule
+import com.example.newsinmodules.network.NewsAPI
+import dagger.BindsInstance
 import dagger.Component
-import javax.inject.Singleton
 
 @Component(modules = [NetworkModule::class])
-@Singleton
-interface AppComponent {
+@AppScope
+interface AppComponent : ArticlesDeps {
 
-    fun inject(activity: MainActivity)
+    @Component.Factory
+    interface Factory {
+        fun create(
+            @BindsInstance application: Application
+        ): AppComponent
+    }
+
+    override fun api(): NewsAPI
 }

@@ -42,6 +42,7 @@ class ArticlesVM(
         })
     }
 
+    @ArticlesScope
     class Factory @Inject constructor(
         private val newsApi: NewsAPI
     ) : ViewModelProvider.Factory {

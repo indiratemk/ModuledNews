@@ -2,24 +2,16 @@ package com.example.newsinmodules.articles
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsinmodules.NewsApp
 import com.example.newsinmodules.databinding.MainActivityBinding
 import com.example.newsinmodules.details.ArticleDetailsActivity
-import dagger.Lazy
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: MainActivityBinding
-    private val viewModel: ArticlesVM by viewModels {
-        factory.get()
-    }
-
-    @Inject
-    lateinit var factory: Lazy<ArticlesVM.Factory>
+    private lateinit var viewModel: ArticlesVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         val articlesComponent = DaggerArticlesComponent.factory()
             .create(deps = (application as NewsApp).appComponent)
         articlesComponent.inject(this)
+        viewModel = articlesComponent.factory.create(ArticlesVM::class.java)
 
         viewModel.articles.observe(this, { articles ->
             val articlesAdapter = ArticlesAdapter(

@@ -3,14 +3,13 @@ package com.example.newsinmodules.articles
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.newsinmodules.network.NewsAPI
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class ArticlesVM(
+class ArticlesVM @Inject constructor(
     private val newsApi: NewsAPI
 ) : ViewModel() {
 
@@ -40,18 +39,5 @@ class ArticlesVM(
                 _error.value = "Что-то пошло не так..."
             }
         })
-    }
-
-    @ArticlesScope
-    class Factory @Inject constructor(
-        private val newsApi: NewsAPI
-    ) : ViewModelProvider.Factory {
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            // TODO: 07.11.2021 not working!!! 
-//            require(modelClass == ArticlesVM::class)
-            return ArticlesVM(newsApi) as T
-        }
     }
 }

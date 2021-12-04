@@ -1,5 +1,6 @@
 package com.example.newsinmodules.articles
 
+import com.example.newsinmodules.MultiViewModelFactory
 import dagger.Component
 
 @Component(dependencies = [ArticlesDeps::class])
@@ -12,4 +13,6 @@ interface ArticlesComponent {
     }
 
     fun inject(activity: MainActivity)
+
+    val factory: MultiViewModelFactory
 }
